@@ -1,14 +1,9 @@
-<<<<<<< HEAD
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
 from django.views.generic.edit import FormMixin
 from django.db.models import Q
 from .forms import CommentForm
-=======
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
->>>>>>> d9126545366a992dec1d26c71856227db91d90d6
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
@@ -19,11 +14,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-<<<<<<< HEAD
 from .models import Post, Comment
-=======
-from .models import Post
->>>>>>> d9126545366a992dec1d26c71856227db91d90d6
 
 
 def home(request):
@@ -32,10 +23,6 @@ def home(request):
     }
     return render(request, 'blog/home.html', context) # get context and request to home.html
 
-<<<<<<< HEAD
-
-=======
->>>>>>> d9126545366a992dec1d26c71856227db91d90d6
 class PostListView(ListView):
     model = Post
     template_name = 'blog/home.html' # default: <app>/<model>_<viewtype>.html
@@ -52,7 +39,6 @@ class UserPostListView(ListView):
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Post.objects.filter(author=user).order_by('-date_posted')
-<<<<<<< HEAD
     
     
 def ViewLastPost(request):
@@ -86,12 +72,6 @@ class PostDetailView(FormMixin, DetailView):
             
 
 
-=======
-
-
-class PostDetailView(DetailView):
-    model = Post
->>>>>>> d9126545366a992dec1d26c71856227db91d90d6
 
 
 class PostCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
@@ -103,10 +83,6 @@ class PostCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-<<<<<<< HEAD
-
-=======
->>>>>>> d9126545366a992dec1d26c71856227db91d90d6
 class PostUpdateView(SuccessMessageMixin, UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = Post
     template_name = 'blog/update.html'
@@ -139,9 +115,5 @@ class PostDeleteView(SuccessMessageMixin, UserPassesTestMixin, LoginRequiredMixi
         return False
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> d9126545366a992dec1d26c71856227db91d90d6
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})

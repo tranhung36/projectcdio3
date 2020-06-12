@@ -1,9 +1,6 @@
 {% extends 'blog/base.html' %}
-<<<<<<< HEAD
 {% load static %}
 {% load crispy_forms_tags %}
-=======
->>>>>>> d9126545366a992dec1d26c71856227db91d90d6
 {% block content %}
     <article class="media content-section">
         <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}" alt="avatar">
@@ -20,7 +17,6 @@
         {% endif %}
         </div>
     </article>
-<<<<<<< HEAD
     <br>
     <hr>
     <form method='POST'>
@@ -44,6 +40,4 @@
             </div>
         {% endfor %}
     </form>
-=======
->>>>>>> d9126545366a992dec1d26c71856227db91d90d6
 {% endblock  %}

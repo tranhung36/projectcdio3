@@ -9,11 +9,7 @@
           <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt="avatar">
           <div class="media-body">
             <div class="article-metadata">
-<<<<<<< HEAD
               <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author.get_full_name }}</a>
-=======
-              <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
->>>>>>> d9126545366a992dec1d26c71856227db91d90d6
               <small class="text-muted">{{ post.date_posted|date:"H:i d F, Y" }}</small>
             </div>
             <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>

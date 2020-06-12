@@ -83,7 +83,6 @@ body {
     font-size: 2.5rem;
   }
 
-<<<<<<< HEAD
   .comment-wrapper .panel-body {
     max-height:650px;
     overflow:auto;
@@ -98,7 +97,8 @@ body {
   .comment-wrapper .media-list .media {
     border-bottom:1px dashed #efefef;
     margin-bottom:25px;
-=======
+  }
+  
   .carousel-item {
     height: 80vh;
     min-height: 300px;
@@ -135,5 +135,4 @@ body {
 
   .navbar {
     padding: 10px;
->>>>>>> d9126545366a992dec1d26c71856227db91d90d6
   }

@@ -7,10 +7,7 @@ from django.urls import reverse
 class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
-<<<<<<< HEAD
     published = models.BooleanField(default=True)
-=======
->>>>>>> d9126545366a992dec1d26c71856227db91d90d6
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE) # models.CASCADE just delete author not delete User
 
@@ -21,7 +18,6 @@ class Post(models.Model):
         return reverse('post-detail', kwargs={'pk': self.pk})
     
 
-<<<<<<< HEAD
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
@@ -32,7 +28,5 @@ class Comment(models.Model):
     def __str__(self):
         return '{} by {}'.format(self.post.title, str(self.user.username))
     
-=======
->>>>>>> d9126545366a992dec1d26c71856227db91d90d6
 
     
