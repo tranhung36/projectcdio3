@@ -1,5 +1,4 @@
 {% extends 'blog/base.html' %}
-{% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
     <article class="media content-section">
@@ -17,27 +16,50 @@
         {% endif %}
         </div>
     </article>
+    <form action="{% url 'like_post' %} " method="POST">
+        {% csrf_token %}
+        {% if is_liked %}
+            <button type="submit" name="post_id" value="{{ object.id }}" class="btn btn-primary btn-xs">Bỏ thích</button>
+        {% else %}
+            <button type="submit" name="post_id" value="{{ object.id }}" class="btn btn-primary btn-xs">Thích</button>
+        {% endif %}
+    </form>
     <br>
     <hr>
-    <form method='POST'>
-        {% csrf_token %}
-        <div class="main-comment-section">
-            <small class="text-muted">Tổng lượt bình luận: {{ comments.count }}</small>  <h3>Bình luận bài viết</h3>
-        </div>
-        {{ form|crispy }}
-        <input type="submit" value="Gửi" class="btn btn-outline-success">
-        <br>
-        <hr>
-        {% for comment in comments %}
-            <div class="media-body">
-                <span class="text-muted pull-right">
-                    <small class="text-muted">{{comment.timestamp}}</small>
-                </span>
-                <strong class="text-success">{{comment.user}}</strong>
-                <p>
-                    {{comment.content}}
-                </p>
+    {% if user.is_authenticated %}
+        <form method='POST'>
+            {% csrf_token %}
+            <div class="main-comment-section">
+                <small class="text-muted">Tổng lượt bình luận: {{ comments.count }}</small>  <h3>Bình luận bài viết</h3>
             </div>
-        {% endfor %}
-    </form>
+            {{ form|crispy }}
+            <input type="submit" value="Gửi" class="btn btn-outline-success">
+            <br>
+            <hr>
+            {% for comment in comments %}
+                <div class="media-body">
+                    <span class="text-muted pull-right">
+                        <small class="text-muted">{{comment.timestamp}}</small>
+                    </span>
+                    <strong class="text-success">{{comment.user}}</strong>
+                    <p>
+                        {{comment.content}}
+                    </p>
+                </div>
+            {% endfor %}
+        </form>
+        {% else %}
+            <a href="{% url 'login' %}">Đăng nhập để bình luận bài viết</a>
+            {% for comment in comments %}
+                <div class="media-body">
+                    <span class="text-muted pull-right">
+                        <small class="text-muted">{{comment.timestamp}}</small>
+                    </span>
+                    <strong class="text-success">{{comment.user}}</strong>
+                    <p>
+                        {{comment.content}}
+                    </p>
+                </div>
+            {% endfor %}
+    {% endif %}
 {% endblock  %}

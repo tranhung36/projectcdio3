@@ -3,7 +3,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
 from django.views.generic.edit import FormMixin
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from .forms import CommentForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
@@ -71,6 +73,16 @@ class PostDetailView(FormMixin, DetailView):
             return redirect('post-detail', pk=self.kwargs.get('pk'))
             
 
+def like_post(request):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    is_liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        is_liked = False
+    else:
+        post.likes.add(request.user)
+        is_liked = True
+    return HttpResponseRedirect(post.get_absolute_url())
 
 
 
