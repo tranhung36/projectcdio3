@@ -4,9 +4,9 @@ from PIL import Image
 
 
 class Profile(models.Model):
-    first_name = models.CharField(max_length=200, default="", blank=True, null=True)
-    last_name = models.CharField(max_length=200, default="", blank=True, null=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=200, blank=True)
+    last_name = models.CharField(max_length=200, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     def __str__(self):
