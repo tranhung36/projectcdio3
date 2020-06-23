@@ -48,7 +48,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               {% for country in countries %}
-                <a class="dropdown-item" href="{% url 'blog-home' country.id %}">{{ country.country_name }}</a>
+                <a class="dropdown-item" href="{% url 'blog-country' country.id %}">{{ country.country_name }}</a>
               {% endfor %}
             </div>
           </li>
