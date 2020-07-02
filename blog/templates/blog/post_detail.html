@@ -45,57 +45,141 @@
 </div>
 <br>
 <br>
+<div class="main-comment-section">
+    <small class="text-muted">{{ post.liked.all.count }} lượt thích</small>
+</div>
 <form action="{% url 'like-post' post.pk %}" method='POST' style="float: right;">
     {% csrf_token %}
-    <small class='text-muted'>{{ post.liked.all.count }} lượt thích</small>
+    {% if user.is_authenticated %}
     {% if user not in post.liked.all %}
-    <button class="btn btn-primary btn-sm" type="submit" name="post_id" value="{{ post.id }}">Thích</button>
+    <button class="btn-primary" type="submit" name="post_id" value="{{ post.id }}"><i class="far fa-thumbs-up"
+            aria-hidden="true"></i>Thích</button>
     {% else %}
-    <button class="btn btn-primary btn-sm" type="submit" name="post_id" value="{{ post.id }}">Bỏ Thích</button>
+    <button class="btn-primary" type="submit" name="post_id" value="{{ post.id }}"><i class="far fa-thumbs-up"
+            aria-hidden="true"></i>Bỏ
+        Thích</button>
     {% endif %}
+    <div class="fb-share-button" data-href="{{ request.build_absolute_uri }}" data-layout="button" data-size="large"><a
+            target="_blank"
+            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
+            class="fb-xfbml-parse-ignore">Chia sẻ</a></div>
+    {% endif %}
+
 </form>
+<div class="container">
+    <div class="row gallery">
+        <div id="mdb-lightbox-ui"></div>
+        {% for p in post.images_set.all %}
+        <figure class="col-md-4">
+            <a href="{{ p.images.url }}" data-size="800x800">
+                <img alt="picture" src="{{ p.images.url }}" class="img-fluid">
+            </a>
+        </figure>
+        {% endfor %}
+    </div>
+</div>
 <br>
 <br>
 <hr>
 {% if user.is_authenticated %}
 <form method='POST'>
     {% csrf_token %}
-    <div class="main-comment-section">
-        <small class="text-muted">Tổng lượt bình luận: {{ comments.count }}</small>
-        <h3>Bình luận bài viết</h3>
-    </div>
-    {{ form|crispy }}
-    <input type="submit" value="Gửi" class="btn btn-outline-primary">
-    <br>
-    <br>
-    {% for comment in comments %}
-    <div class="media">
-        <img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="{{ object.author.profile.image.url }}"
-            alt="avatar">
-        <div class="media-body">
-            <h5 class="mt-0 font-weight-bold blue-text"><a
-                    href="{% url 'user-posts' post.author.username %}">{{ comment.user }}</a> <small
-                    class="text-muted">{{comment.timestamp|date:"H:i d/m/Y"}}</small></h5>
-            {{comment.content}}
+    <div class="card my-4">
+        <h5 class="card-header">Bình luận bài viết</h5>
+        <div class="card-body">
+            {{ form|crispy }}
+            <input type="submit" value="Gửi" class="btn btn-primary btn-sm">
         </div>
     </div>
-    {% endfor %}
 </form>
-{% else %}
-<a href="{% url 'login' %}">Đăng nhập để bình luận bài viết</a>
-{% for comment in comments %}
-<div class="media-body">
-    <div class="media mt-3 shadow-textarea">
-        <img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="{{ object.author.profile.image.url }}"
-            alt="avatar">
-        <div class="media-body">
-            <h5 class="mt-0 font-weight-bold blue-text"><a
-                    href="{% url 'user-posts' post.author.username %}">{{ comment.user }}</a> <small
-                    class="text-muted">{{comment.timestamp|date:"H:i d/m/Y"}}</small></h5>
-            {{comment.content}}
+
+<div class="container">
+    <div class="be-comment-block">
+        <h1 class="comments-title">Bình luận ({{ comments.count }})</h1>
+        {% for comment in comments %}
+        <div class="be-comment">
+            <div class="be-img-comment">
+                <a href="{% url 'user-posts' user.username %}">
+                    <img src="{{ object.author.profile.image.url }}" alt="" class="be-ava-comment">
+                </a>
+            </div>
+            <div class="be-comment-content">
+                <span class="be-comment-name">
+                    <a href="{% url 'user-posts' comment.user.username %}">{{ comment.user.get_full_name }}</a>
+                </span>
+                <span class="be-comment-time">
+                    <i class="fa fa-clock-o"></i>
+                    {{ comment.timestamp|date:"H:i d/m/Y" }}
+                </span>
+                <p class="be-comment-text">
+                    {{comment.content}}
+                </p>
+            </div>
         </div>
+        {% endfor %}
     </div>
 </div>
-{% endfor %}
+{% else %}
+<a href="{% url 'login' %}">Đăng nhập để bình luận bài viết</a>
+<div class="container">
+    <div class="be-comment-block">
+        <h1 class="comments-title">Bình luận ({{ comments.count }})</h1>
+        {% for comment in comments %}
+        <div class="be-comment">
+            <div class="be-img-comment">
+                <a href="{% url 'user-posts' post.author.username %}">
+                    <img src="{{ object.author.profile.image.url }}" alt="" class="be-ava-comment">
+                </a>
+            </div>
+            <div class="be-comment-content">
+
+                <span class="be-comment-name">
+                    <a href="{% url 'user-posts' comment.user.username %}">{{ comment.user.get_full_name }}</a>
+                </span>
+                <span class="be-comment-time">
+                    <i class="fa fa-clock-o"></i>
+                    {{ comment.timestamp|date:"H:i d/m/Y" }}
+                </span>
+                <p class="be-comment-text">
+                    {{comment.content}}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endif %}
+<br>
+<h3>Các bài viết liên quan:</h3>
+<br>
+<!-- Card deck -->
+<div class="row row-cols-1 row-cols-md-3">
+    {% for post in post_list %}
+    {% if forloop.counter0|divisibleby:1 %}
+    <!-- Card -->
+    <div class="col mb-4">
+        <div class="card">
+            <!--Card image-->
+            <div class="view overlay">
+                <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
+                <a href="{% url 'post-detail' post.id %}">
+                    <div class="mask rgba-white-slight"></div>
+                </a>
+            </div>
+            <!--Card content-->
+            <div class="card-body">
+                <!--Title-->
+                <h4 class="card-title">{{ post.title }}</h4>
+                <!--Text-->
+                <p class="card-text">{{ post.content|safe|truncatewords:"20" }}</p>
+                <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                <a href="{% url 'post-detail' post.id %}" class="white-text d-flex justify-content-end">
+                    <h5>Xem thêm <i class="fas fa-angle-double-right"></i></h5>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
 {% endblock  %}
