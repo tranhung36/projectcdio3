@@ -68,7 +68,7 @@ class CountryListView(ListView):
         context = super(CountryListView, self).get_context_data(**kwargs)
         context['countries'] = Country.objects.all()
         context['country'] = Country.objects.filter(id=self.kwargs.get('id')).first()
-        context['featured_post'] = Post.objects.annotate(like_count=Count('liked')).order_by('-like_count')[:3]
+        context['featured_post'] = Post.objects.annotate(like_count=Count('liked')).order_by('-like_count')[:5]
         return context
 
     def get_queryset(self):
@@ -123,8 +123,7 @@ class PostDetailView(SuccessMessageMixin, FormMixin, DetailView):
             comm_form.instance.post = Post.objects.get(id=self.kwargs.get('pk'))
             comm_form.instance.user = self.request.user
             comm_form.save()
-            return redirect('post-detail', pk=self.kwargs.get('pk'))
-    
+
 
 class PostCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Post
@@ -198,6 +197,7 @@ class PostDeleteView(SuccessMessageMixin, UserPassesTestMixin, LoginRequiredMixi
             return True
         return False
 
+
 def PostLikeView(request, pk):
     if request.method == 'POST':
         user = request.user
@@ -207,7 +207,6 @@ def PostLikeView(request, pk):
             post.liked.remove(user)
         else:
             post.liked.add(user)
-
     return redirect('post-detail', pk=post.id)
 
 

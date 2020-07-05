@@ -37,27 +37,54 @@
     {% block content %}{% endblock %}
     <br>
   </div>
-  <footer class="page-footer font-small mdb-color deep-orange lighten-1 pt-4">
+  <footer class="page-footer font-small unique-color-dark">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-2 col-md-12 mb-4">
-          <div class="view overlay z-depth-1-half">
-            <img src="{% static 'blog/images/pic1.jpg' %}" class="img-fluid" alt="">
-            <a href="">
-              <div class="mask rgba-white-light"></div>
-            </a>
+      <!-- Grid row-->
+      <div class="row py-2 d-flex align-items-center"></div>
+      <!-- Footer Links -->
+      <div class="container text-center text-md-left mt-5">
+        <!-- Grid row -->
+        <div class="row mt-3">
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+            <!-- Content -->
+            <h6 class="text-uppercase font-weight-bold">Thông tin</h6>
+            <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+            <p><a href="{% url 'blog-about' %}">Thông tin website</a></p>
+          </div>
+          <!-- Grid column -->
+          <!-- Grid column -->
+          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase font-weight-bold">Điều khoản</h6>
+            <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+            <p>
+              <a href="#!">Điều khoản sử dụng</a>
+            </p>
+          </div>
+          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase font-weight-bold">Liên hệ</h6>
+            <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+            <p>
+              <i class="fas fa-home mr-3"></i>...</p>
+            <p>
+              <i class="fas fa-envelope mr-3"></i> admin@example.com</p>
+            <p>
+              <i class="fas fa-phone mr-3"></i>...</p>
+            <p>
+              <i class="fas fa-print mr-3"></i>...</p>
           </div>
         </div>
       </div>
-    </div>
-    <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2020 Copyright:
-      <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
-    </div>
-    <!-- Copyright -->
+      <div class="footer-copyright text-center py-3">© 2020 Copyright:
+        <a href="https://mdbootstrap.com/"> IGO.com version-beta</a>
+      </div>
+      <!-- Copyright -->
   </footer>
   <!-- Optional JavaScript -->
   <!-- JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <div id="fb-root"></div>
   <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v7.0"
     nonce="9rkS8diz"></script>
@@ -70,6 +97,14 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.0/js/mdb.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $(".comment-reply-btn").click(function (event) {
+        event.preventDefault();
+        $(this).parent().next(".comment-reply").fadeToggle();
+      })
+    })
+  </script>
 </body>
 
 </html>

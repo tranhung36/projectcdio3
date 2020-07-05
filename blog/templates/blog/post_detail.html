@@ -114,6 +114,38 @@
                 <p class="be-comment-text">
                     {{comment.content}}
                 </p>
+                <p>{{ comment.likes.count }}</p>
+                <footer class="footer-comment"><a class="comment-reply-btn" href="#">Reply</a></footer>
+                <div class="comment-reply" style="display:none;">
+                    {% for reply in comment.replies.all %}
+                    <div class="be-comment">
+                        <div class="be-img-comment">
+                            <a href="{% url 'user-posts' user.username %}">
+                                <img src="{{ object.author.profile.image.url }}" alt="" class="be-ava-comment">
+                            </a>
+                        </div>
+                        <div class="be-comment-content">
+                            <span class="be-comment-name">
+                                <a href="{% url 'user-posts' reply.user.username %}">{{ reply.user.get_full_name }}</a>
+                            </span>
+                            <span class="be-comment-time">
+                                <i class="fa fa-clock-o"></i>
+                                {{ reply.timestamp|date:"H:i d/m/Y" }}
+                            </span>
+                            <p class="be-comment-text">
+                                {{reply.content}}
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <form action="." method="post">
+                        {{ form|crispy }}
+                        {% csrf_token %}
+                        <!-- Hidden input for parent comment.id -->
+                        <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                        <input class="btn btn-primary btn-sm" type="submit" value="Reply">
+                    </form>
+                </div>
             </div>
         </div>
         {% endfor %}
